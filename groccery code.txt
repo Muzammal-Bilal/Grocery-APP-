@@ -1,0 +1,2037 @@
+#include<SFML\Graphics.hpp>
+#include<iostream>
+#include<string>
+#include<fstream>
+#include<Windows.h>
+#include<iomanip>
+using namespace std;
+using namespace sf;
+void startgraphics()
+{
+	RenderWindow window(VideoMode(VideoMode::getDesktopMode()), "Grocer App", Style::Close);
+	Event e;
+	float radius = 50.0f;
+	CircleShape c(radius);
+	c.setFillColor(Color(238, 126, 37, 255));
+	Vector2f pos(600.0f, 300.0f);
+	float out = 0.0f;
+	c.setOutlineThickness(0.0f);
+	c.setOutlineColor(Color(238, 126, 37, 255));
+
+	RectangleShape r(Vector2f(500, 300));
+	float speed = 1.0f;
+	Vector2f position(400.0f, 900.0f);
+
+
+	Texture texture;
+	texture.loadFromFile("unnamed.png");
+	r.setTexture(&texture);
+
+	float vel = 0.6f;
+
+	while (window.isOpen())
+	{
+		while (window.pollEvent(e))
+		{
+			switch (e.type)
+			{
+			case Event::Closed:
+				window.close();
+			case Event::KeyPressed:
+				if (e.key.code == Keyboard::Enter)
+				{
+					window.close();
+				}
+			}
+
+
+		}
+		if (pos.x == 600.0f&&pos.y >= 650)
+		{
+			vel *= -1;
+		}
+		if (pos.x == 600.0f&&pos.y <= 200.0f)
+		{
+			vel = 0.0f;
+		}
+		pos.y += vel;
+		c.setPosition(pos);
+		if (pos.x == 600.0f&&pos.y <= 200.0f)
+		{
+			out += 1.0f;
+			position.y -= speed;
+		}
+		c.setOutlineThickness(out);
+		if (position.x == 400.0f&&position.y <= 200.0f)
+		{
+			speed = 0;
+		}
+
+		r.setPosition(position);
+
+		window.clear(Color::White);
+		window.draw(c);
+		window.draw(r);
+		window.display();
+	}
+}
+void endgraphics()
+{
+	RenderWindow window(VideoMode(VideoMode::getDesktopMode()), "Graphics", Style::Close);
+	Event e;
+
+	RectangleShape road(Vector2f(1400, 200));
+	road.setOrigin(0, 0);
+	road.setPosition(0, 540);
+	Texture roadtexture;
+	roadtexture.loadFromFile("th.JFIF");
+	road.setTexture(&roadtexture);
+
+	RectangleShape biker(Vector2f(150, 150));
+	Vector2f pos(0, 530);
+	float speed = 0.5f;
+	Texture texture;
+	texture.loadFromFile("bike.png");
+	biker.setTexture(&texture);
+
+	RectangleShape house1(Vector2f(350, 300));
+	house1.setOrigin(0, 0);
+	house1.setPosition(Vector2f(500, 250));
+	Texture unitexture;
+	unitexture.loadFromFile("1_gDv6yeOX4E5ahSy3nE0Ixw-removebg-preview.png");
+	house1.setTexture(&unitexture);
+
+	RectangleShape house2(Vector2f(400, 300));
+	house2.setOrigin(0, 0);
+	house2.setPosition(Vector2f(950, 270));
+	Texture examtexture;
+	examtexture.loadFromFile("COSMO-2A-2D-Facade-Option-removebg-preview.png");
+	house2.setTexture(&examtexture);
+
+
+
+	RectangleShape background(Vector2f(window.getSize().x / 1, window.getSize().y / 1.2));
+	Texture backtexture;
+	backtexture.loadFromFile("sky.JFIF");
+	background.setTexture(&backtexture);
+
+
+
+	while (window.isOpen())
+	{
+		while (window.pollEvent(e))
+		{
+			switch (e.type)
+			{
+			case Event::Closed:
+				window.close();
+			case Event::KeyPressed:
+				if (e.key.code == Keyboard::Enter)
+				{
+					window.close();
+				}
+			}
+
+
+		}
+
+
+		if (pos.x >= 1050) {
+			speed = 0.0f;
+		}
+		pos.x += speed;
+
+		biker.setPosition(pos);
+
+		window.clear();
+		window.draw(background);
+
+		window.draw(road);
+		window.draw(house1);
+		window.draw(house2);
+
+		window.draw(biker);
+		window.display();
+	}
+}
+template <typename t>
+t loading()
+{
+	cout << "\t\t\t\t\t Loading:";
+	char x = 219;
+	for (int i = 0; i < 25; i++)
+	{
+		cout << x;
+		Sleep(30);
+		if (i == 5)
+		{
+			Sleep(1000);
+		}
+		if (i == 20)
+		{
+			Sleep(500);
+		}
+	}
+	return x;
+}
+class cart
+{
+public:
+
+	int id, price, quantity, totalPrice = 0;
+	string name;
+	int count;
+	void operator+(cart &temp)
+	{
+
+		c->totalPrice = c->totalPrice + temp.totalPrice;
+
+	}
+}c[100];
+class product
+{
+public:
+	int product_number;
+	string product_name;
+	int product_price;
+
+public:
+	void Drinksandsnackes()
+	{
+		ofstream item("Drinks and snakes.txt", ios::app);
+		cout << "Product id :";
+		cin >> product_number;
+		cout << "Product name :";
+		cin >> product_name;
+		cout << "Product Prize :";
+		cin >> product_price;
+		item << product_number << "\t\t" << product_name << "\t\t" << product_price << endl;
+		cout << "\nSuccessfully Upload item \n";
+		Sleep(1000);
+		system("CLS");
+		item.close();
+	}
+	void Groccery()
+	{
+		ofstream item("Groccery.txt", ios::app);
+		cout << "Product id :";
+		cin >> product_number;
+		cout << "Product name :";
+		cin >> product_name;
+		cout << "Product Prize :";
+		cin >> product_price;
+
+		//item << "Product ID" << "\t\t" << "Product Name" << "\t\t" << "Product Quantity" << "\t\t" << "Product prize\n";
+		item << product_number << "\t\t" << product_name << "\t\t" << product_price << endl;
+		cout << "\nSuccessfully Upload item \n";
+		Sleep(1000);
+		system("CLS");
+		item.close();
+	}
+	void Vegitable()
+	{
+		ofstream item("Vegitable.txt", ios::app);
+		cout << "Product id :";
+		cin >> product_number;
+		cout << "Product name :";
+		cin >> product_name;
+		cout << "Product Prize :";
+		cin >> product_price;
+
+		//item << "Product ID" << "\t\t" << "Product Name" << "\t\t" << "Product Quantity" << "\t\t" << "Product prize\n";
+		item << product_number << "\t\t" << product_name << "\t\t" << product_price << endl;
+		cout << "\nSuccessfully Upload item \n";
+		Sleep(1000);
+		system("CLS");
+		item.close();
+	}
+	void bakery()
+	{
+		ofstream item("bakery.txt", ios::app);
+		cout << "Product id :";
+		cin >> product_number;
+		cout << "Product name :";
+		cin >> product_name;
+		cout << "Product Prize :";
+		cin >> product_price;
+
+		//item << "Product ID" << "\t\t" << "Product Name" << "\t\t" << "Product Quantity" << "\t\t" << "Product prize\n";
+		item << product_number << "\t\t" << product_name << "\t\t" << product_price << endl;
+		cout << "\nSuccessfully Upload item \n";
+		Sleep(1000);
+		system("CLS");
+		item.close();
+	}
+	void fruit()
+	{
+		ofstream item("fruit.txt", ios::app);
+		cout << "Product id :";
+		cin >> product_number;
+		cout << "Product name :";
+		cin >> product_name;
+		cout << "Product Prize :";
+		cin >> product_price;
+
+		//item << "Product ID" << "\t\t" << "Product Name" << "\t\t" << "Product Quantity" << "\t\t" << "Product prize\n";
+		item << product_number << "\t\t" << product_name << "\t\t" << product_price << endl;
+		cout << "\nSuccessfully Upload item \n";
+		Sleep(1000);
+		system("CLS");
+		item.close();
+	}
+	void readdrink()
+	{
+		ifstream file("Drinks and snakes.txt");
+		cout << "P_ID" << "\t\t" << "P_Name" << "\t\t" << "P_prize\n";
+		string read;
+		while (!file.eof())
+		{
+			getline(file, read);
+			cout << read << endl;
+		}
+		file.close();
+	}
+	void readGroccery()
+	{
+		ifstream file("Groccery.txt");
+		cout << "P_ID" << "\t\t" << "P_Name" << "\t\t" << "P_prize\n";
+		string read;
+		while (!file.eof())
+		{
+			getline(file, read);
+			cout << read << endl;
+		}
+		file.close();
+	}
+	void readVegitable()
+	{
+		ifstream file("Vegitable.txt");
+		cout << "P_ID" << "\t\t" << "P_Name" << "\t\t" << "P_prize\n";
+		string read;
+		while (!file.eof())
+		{
+			getline(file, read);
+			cout << read << endl;
+		}
+		file.close();
+	}
+	void readBakery()
+	{
+		ifstream file("bakery.txt");
+		cout << "P_ID" << "\t\t" << "P_Name" << "\t\t" << "P_prize\n";
+		string read;
+		while (!file.eof())
+		{
+			getline(file, read);
+			cout << read << endl;
+		}
+		file.close();
+	}
+	void readFruit()
+	{
+		ifstream file("fruit.txt");
+		cout << "P_ID" << "\t\t" << "P_Name" << "\t\t" << "P_prize\n";
+		string read;
+		while (!file.eof())
+		{
+			getline(file, read);
+			cout << read << endl;
+		}
+		file.close();
+	}
+	void purchasedrink()
+	{
+		int a;
+	st:
+
+
+		ifstream file("Drinks and snakes.txt");
+		bool b = false;
+		string name;
+		cout << "Enter  product name\n";
+		cin >> name;
+
+		while (!file.eof())
+		{
+			file >> product_number;
+			file >> product_name;
+			file >> product_price;
+			if (product_name == name)
+			{
+				cout << product_number << "\t\t" << product_name << "\t\t" << product_price << endl;
+				char d;
+				cout << "Press 'Y' for purchas this item :\n";
+				cout << "Press 'N' for no :\n";
+				cin >> d;
+				if (d == 'Y')
+				{
+					c[c->count].id = product_number;
+					c[c->count].name = product_name;
+					c[c->count].price = product_price;
+					cout << c[c->count].id << "    " << c[c->count].name << "   " << c[c->count].price << endl;
+
+					cout << "Enter the quantity :";
+					cin >> c[c->count].quantity;
+					c[c->count].totalPrice = c[c->count].price * c[c->count].quantity;
+					c->count += 1;
+
+					b = true;
+					system("CLS");
+					break;
+				}
+				if (d == 'N')
+				{
+					continue;
+				}
+
+			}
+
+		}
+		if (b == false)
+		{
+			cout << "\nNot found\n";
+			goto st;
+		}
+		file.close();
+	}
+	void purchasegroccery()
+	{
+		int a;
+	st:
+
+
+		ifstream file("Groccery.txt");
+		bool b = false;
+		string name;
+		cout << "Enter  product name\n";
+		cin >> name;
+
+		while (!file.eof())
+		{
+			file >> product_number;
+			file >> product_name;
+			file >> product_price;
+			cout << product_number << "\t\t" << product_name << "\t\t" << product_price << endl;
+			char d;
+			cout << "Press 'Y' for purchas this item :\n";
+			cout << "Press 'N' for no :\n";
+			cin >> d;
+			if (d == 'Y')
+			{
+				c[c->count].id = product_number;
+				c[c->count].name = product_name;
+				c[c->count].price = product_price;
+				cout << c[c->count].id << "    " << c[c->count].name << "   " << c[c->count].price << endl;
+
+				cout << "Enter the quantity :";
+				cin >> c[c->count].quantity;
+				c[c->count].totalPrice = c[c->count].price * c[c->count].quantity;
+				c->count += 1;
+
+				b = true;
+				system("CLS");
+				break;
+			}
+			if (d == 'N')
+			{
+				continue;
+			}
+
+		}
+		if (b == false)
+		{
+			cout << "\nNot found\n";
+			goto st;
+		}
+		file.close();
+	}
+	void purchasevegetable()
+	{
+		int a;
+	st:
+
+		ifstream file("Vegitable.txt");
+		bool b = false;
+		string name;
+		cout << "Enter  product name\n";
+		cin >> name;
+
+		while (!file.eof())
+		{
+			file >> product_number;
+			file >> product_name;
+			file >> product_price;
+			cout << product_number << "\t\t" << product_name << "\t\t" << product_price << endl;
+			char d;
+			cout << "Press 'Y' for purchas this item :\n";
+			cout << "Press 'N' for no :\n";
+			cin >> d;
+			if (d == 'Y')
+			{
+				c[c->count].id = product_number;
+				c[c->count].name = product_name;
+				c[c->count].price = product_price;
+				cout << c[c->count].id << "    " << c[c->count].name << "   " << c[c->count].price << endl;
+
+				cout << "Enter the quantity :";
+				cin >> c[c->count].quantity;
+				c[c->count].totalPrice = c[c->count].price * c[c->count].quantity;
+				c->count += 1;
+
+				b = true;
+				system("CLS");
+				break;
+			}
+			if (d == 'N')
+			{
+				continue;
+			}
+
+
+		}
+		if (b == false)
+		{
+			cout << "\nNot found\n";
+			goto st;
+		}
+		file.close();
+	}
+	void purchasebakery()
+	{
+
+		int a;
+	st:
+
+
+		ifstream file("bakery.txt");
+		bool b = false;
+		string name;
+		cout << "Enter  product name\n";
+		cin >> name;
+
+		while (!file.eof())
+		{
+			file >> product_number;
+			file >> product_name;
+			file >> product_price;
+			cout << product_number << "\t\t" << product_name << "\t\t" << product_price << endl;
+			char d;
+			cout << "Press 'Y' for purchas this item :\n";
+			cout << "Press 'N' for no :\n";
+			cin >> d;
+			if (d == 'Y')
+			{
+				c[c->count].id = product_number;
+				c[c->count].name = product_name;
+				c[c->count].price = product_price;
+				cout << c[c->count].id << "    " << c[c->count].name << "   " << c[c->count].price << endl;
+
+				cout << "Enter the quantity :";
+				cin >> c[c->count].quantity;
+				c[c->count].totalPrice = c[c->count].price * c[c->count].quantity;
+				c->count += 1;
+
+				b = true;
+				system("CLS");
+				break;
+			}
+			if (d == 'N')
+			{
+				continue;
+			}
+
+
+		}
+		if (b == false)
+		{
+			cout << "\nNot found\n";
+			goto st;
+		}
+		file.close();
+	}
+	void purchasefruit()
+	{
+		int a;
+	st:
+
+
+		ifstream file("fruit.txt");
+		bool b = false;
+		string name;
+		cout << "Enter  product name\n";
+		cin >> name;
+
+		while (!file.eof())
+		{
+			file >> product_number;
+			file >> product_name;
+			file >> product_price;
+			cout << product_number << "\t\t" << product_name << "\t\t" << product_price << endl;
+			char d;
+			cout << "Press 'Y' for purchas this item :\n";
+			cout << "Press 'N' for no :\n";
+			cin >> d;
+			if (d == 'Y')
+			{
+				c[c->count].id = product_number;
+				c[c->count].name = product_name;
+				c[c->count].price = product_price;
+				cout << c[c->count].id << "    " << c[c->count].name << "   " << c[c->count].price << endl;
+
+				cout << "Enter the quantity :";
+				cin >> c[c->count].quantity;
+				c[c->count].totalPrice = c[c->count].price * c[c->count].quantity;
+				c->count += 1;
+
+				b = true;
+				system("CLS");
+				break;
+			}
+			if (d == 'N')
+			{
+				continue;
+			}
+
+
+		}
+		if (b == false)
+		{
+			cout << "\nNot found\n";
+			goto st;
+		}
+		file.close();
+	}
+
+
+};
+void delete_Drink()
+{
+	bool b = false;
+	product p;
+	char choice;
+	cout << "Press ' y' for delete item :\n";
+	cout << "Press 'e' for exit:\n";
+	cin >> choice;
+	if (choice == 'y')
+	{
+		string name;
+		int id;
+		cout << "Enter id ";
+		cin >> id;
+		ofstream tempfile("temp.txt");
+		ifstream read("Drinks and snakes.txt");
+		while (read >> p.product_number >> p.product_name >> p.product_price)
+		{
+			if (p.product_number == id)
+			{
+				b = true;
+			}
+			if (p.product_number != id)
+			{
+				tempfile << p.product_number << "\t\t" << p.product_name << "\t\t" << p.product_price << endl;
+
+			}
+		}
+		read.close();
+		tempfile.close();
+		remove("Drinks and snakes.txt");
+		rename("temp.txt", "Drinks and snakes.txt");
+		if (b == true)
+		{
+			cout << "\nProduct deleted :\n";
+			Sleep(2000);
+		}
+		else
+		{
+			cout << "\nProduct not fount \n";
+			Sleep(2000);
+		}
+	}
+	if (choice == 'e')
+	{
+		system("CLS");
+	}
+
+
+}
+void delete_groccery()
+{
+	bool b = false;
+	product p;
+	char choice;
+	cout << "Press ' y' for delete item :\n";
+	cout << "Press 'e' for exit:\n";
+	cin >> choice;
+	if (choice == 'y')
+	{
+		string name;
+		int id;
+		cout << "Enter id ";
+		cin >> id;
+		ofstream tempfile("temp.txt");
+		ifstream read("Groccery.txt");
+		while (read >> p.product_number >> p.product_name >> p.product_price)
+		{
+			if (p.product_number == id)
+			{
+				b = true;
+			}
+			if (p.product_number != id)
+			{
+				tempfile << p.product_number << "\t\t" << p.product_name << "\t\t" << p.product_price << endl;
+
+			}
+		}
+		read.close();
+		tempfile.close();
+		remove("Groccery.txt");
+		rename("temp.txt", "Groccery.txt");
+		if (b == true)
+		{
+			cout << "\nProduct deleted :\n";
+			Sleep(2000);
+		}
+		else
+		{
+			cout << "\nProduct not fount \n";
+			Sleep(2000);
+		}
+	}
+	if (choice == 'e')
+	{
+		system("CLS");
+	}
+
+
+}
+void delete_vegetables()
+{
+	bool b = false;
+	product p;
+	char choice;
+	cout << "Press ' y' for delete item :\n";
+	cout << "Press 'e' for exit:\n";
+	cin >> choice;
+	if (choice == 'y')
+	{
+		string name;
+		int id;
+		cout << "Enter id ";
+		cin >> id;
+		ofstream tempfile("temp.txt");
+		ifstream read("Vegitable.txt");
+		while (read >> p.product_number >> p.product_name >> p.product_price)
+		{
+			if (p.product_number == id)
+			{
+				b = true;
+			}
+			if (p.product_number != id)
+			{
+				tempfile << p.product_number << "\t\t" << p.product_name << "\t\t" << p.product_price << endl;
+
+			}
+		}
+		read.close();
+		tempfile.close();
+		remove("Vegitable.txt");
+		rename("temp.txt", "Vegitable.txt");
+		if (b == true)
+		{
+			cout << "\nProduct deleted :\n";
+			Sleep(2000);
+		}
+		else
+		{
+			cout << "\nProduct not fount \n";
+			Sleep(2000);
+		}
+
+	}
+	if (choice == 'e')
+	{
+		system("CLS");
+	}
+
+}
+void delete_Bakery()
+{
+	bool b = false;
+	product p;
+	char choice;
+	cout << "Press ' y' for delete item :\n";
+	cout << "Press 'e' for exit:\n";
+	cin >> choice;
+	if (choice == 'y')
+	{
+		string name;
+		int id;
+		cout << "Enter id ";
+		cin >> id;
+		ofstream tempfile("temp.txt");
+		ifstream read("bakery.txt");
+		while (read >> p.product_number >> p.product_name >> p.product_price)
+		{
+			if (p.product_number == id)
+			{
+				b = true;
+			}
+			if (p.product_number != id)
+			{
+				tempfile << p.product_number << "\t\t" << p.product_name << "\t\t" << p.product_price << endl;
+
+			}
+		}
+		read.close();
+		tempfile.close();
+		remove("bakery.txt");
+		rename("temp.txt", "bakery.txt");
+		if (b == true)
+		{
+			cout << "\nProduct deleted :\n";
+			Sleep(2000);
+		}
+		else
+		{
+			cout << "\nProduct not fount \n";
+			Sleep(2000);
+		}
+
+	}
+	if (choice == 'e')
+	{
+		system("CLS");
+	}
+}
+void delete_Fruit()
+{
+	bool b = false;
+	product p;
+	char choice;
+	cout << "Press ' y' for delete item :\n";
+	cout << "Press 'e' for exit:\n";
+	cin >> choice;
+	if (choice == 'y')
+	{
+		string name;
+		int id;
+		cout << "Enter id ";
+		cin >> id;
+		ofstream tempfile("temp.txt");
+		ifstream read("fruit.txt");
+		while (read >> p.product_number >> p.product_name >> p.product_price)
+		{
+			if (p.product_number == id)
+			{
+				b = true;
+			}
+			if (p.product_number != id)
+			{
+				tempfile << p.product_number << "\t\t" << p.product_name << "\t\t" << p.product_price << endl;
+
+			}
+		}
+		read.close();
+		tempfile.close();
+		remove("fruit.txt");
+		rename("temp.txt", "fruit.txt");
+		if (b == true)
+		{
+			cout << "\nProduct deleted :\n";
+			Sleep(2000);
+		}
+		else
+		{
+			cout << "\nProduct not fount \n";
+			Sleep(2000);
+		}
+	}
+	if (choice == 'e')
+	{
+		system("CLS");
+	}
+
+}
+class Avender
+{
+protected:
+	string  firstname, secname, un, pass;
+	char choice;
+	product p;
+public:
+	string password, username;
+	Avender() {}
+	Avender(product P) :p(P) {}
+	virtual void signupavender()
+	{
+
+		ofstream acc("signupavender.txt", ios::app);
+		cout << "\n\n\n\n\n\n\n\n\t\t                     ======================================\n";
+		cout << "\t\t                    |                 Avender                |\n";
+		cout << "\t\t                    |             Sign up ACCOUNT            |\n";
+		cout << "\t\t                     ======================================\n\n";
+	st:
+		cout << "\n\n\t\t                     ======================================\n";
+		cout << "\t\t                    | ENTER THE First Name:   ";
+		cin >> firstname;
+		cout << "\t\t                     ======================================\n";
+		cout << "\t\t                    | ENTER THE Last name :  ";
+		cin >> secname;
+		cout << "\n\t\t                    =======================================\n";
+		cout << "\t\t                    | ENTER THE User name :  ";
+		cin >> un;
+		cout << "\t\t                     ======================================\n\n";
+		ifstream ac("signupavender.txt");
+		while (!ac.eof())
+		{
+			ac >> username;
+			if (username == un)
+			{
+				loading<char>();
+				cout << "\n\n\n                     \t\t\t Username Already Exit" << endl;
+				Sleep(2000);
+				system("CLS");
+				cout << "\n\n\n\n\n\n\n\n\t\t                     ======================================\n";
+				cout << "\t\t                    |                 Again                |\n";
+				cout << "\t\t                    |             Signup ACCOUNT            |\n";
+				cout << "\t\t                     ======================================\n\n";
+				goto st;
+			}
+		}
+		ac.close();
+		username = un;
+		acc << username;
+		acc << "\t\t";
+		cout << "\t\t                     ======================================\n";
+		cout << "\t\t                    | ENTER THE Password :  ";
+		cin >> password;
+		cout << "\t\t                     ======================================\n";
+		acc << password;
+		acc << endl;
+		loading<char>();
+		cout << "\n\n                        \t\t Successfully signup accout         " << endl;
+		Sleep(2000);
+		system("CLS");
+		int choice;
+		cout << "\t\t                     ======================================\n";
+		cout << "\t\t                    | press 1 for login account :  \n";
+		cout << "\t\t                     ======================================\n";
+		cout << "\t\t                    | press 2 for Main Manu     :  \n";
+		cout << "\t\t                     ======================================\n";
+		cin >> choice;
+		if (choice == 1)
+		{
+			system("CLS");
+			loginavender();
+		}
+		if (choice == 2)
+		{
+			system("CLS");
+		}
+		acc.close();
+
+	}
+	virtual void loginavender()
+	{
+		bool a = false;
+
+		cout << "\n\n\n\n\n\n\n\n\t\t                     ======================================\n";
+		cout << "\t\t                    |                Avender               |\n";
+		cout << "\t\t                    |             LOGIN ACCOUNT            |\n";
+		cout << "\t\t                     ======================================\n\n";
+	up:
+		cout << "\n\n\t\t                     ======================================\n";
+		cout << "\t\t                    | ENTER THE USER NAME :   ";
+		cin >> un;
+		cout << "\t\t                     ======================================\n";
+		cout << "\t\t                    | ENTER THE PASSWORD  :  ";
+		cin >> pass;
+		cout << "\t\t                    =======================================\n";
+		ifstream acc("signupavender.txt");
+		while (!acc.eof())
+		{
+			acc >> username;
+			acc >> password;
+			if ((username == un) && (password == pass))
+			{
+				loading<char>();
+				cout << "\n\n\n                        \t\t   You Login Sucessfully         " << endl;
+				Sleep(2000);
+				system("CLS");
+				cout << "\n\n======================================\n";
+				cout << "                   WELCOME";
+				cout << "\n======================================\n";
+				a = true;
+				int choice;
+				do
+				{
+					cout << "\n   Press 1 for Add New Item   :\n";
+					cout << "   Press 2 for Sign out       :\n";
+					cin >> choice;
+					if (choice == 1)
+					{
+						int choice;
+						do
+						{
+							system("CLS");
+							cout << "\n======================================\n";
+							cout << "\n        Choose Category\n";
+							cout << "\n======================================\n";
+							cout << "   Press 1 for Drink and snacks  :\n";
+							cout << "   Press 2 for groccery          :\n";
+							cout << "   Press 3 for vegetable         :\n";
+							cout << "   Press 4 for bakery            :\n";
+							cout << "   Press 5 for fruits            :\n";
+							cout << "   press 6 for exit              :\n";
+							cout << "\n======================================\n";
+							cin >> choice;
+							switch (choice)
+							{
+							case 1:
+								system("CLS");
+								cout << "\n======================================\n";
+								cout << "\n        Drinks and snackes\n";
+								cout << "\n======================================\n";
+								p.Drinksandsnackes();
+								break;
+							case 2:
+								system("CLS");
+								cout << "\n======================================\n";
+								cout << "\n           Groccery \n";
+								cout << "\n======================================\n";
+								p.Groccery();
+								break;
+							case 3:
+								system("CLS");
+								cout << "\n======================================\n";
+								cout << "\n           Vegetables\n";
+								cout << "\n======================================\n";
+								p.Vegitable();
+								break;
+							case 4:
+								system("CLS");
+								cout << "\n======================================\n";
+								cout << "\n             Bakery\n";
+								cout << "\n======================================\n";
+								p.bakery();
+								break;
+							case 5:
+								system("CLS");
+								cout << "\n======================================\n";
+								cout << "\n             Fruits\n";
+								cout << "\n======================================\n";
+								p.fruit();
+								break;
+							default:
+								break;
+							}
+						} while (choice != 6);
+					}
+				} while (choice != 2);
+				break;
+			}
+		}
+		if (a == false)
+		{
+			loading<char>();
+			cout << "\n\n\n                     \t\t\t  Wrong Username & Password        " << endl;
+			Sleep(2000);
+			system("CLS");
+
+			cout << "\n   Press ' a ' for again login account  :\n";
+			cout << "   Press ' s ' for signup account       :\n";
+			cout << "   Press ' e ' for exit                 :\n";
+			cin >> choice;
+			if (choice == 'a')
+			{
+				system("CLS");
+				cout << "\n\n\n\n\n\n\n\n\t\t                     ======================================\n";
+				cout << "\t\t                    |                Again                 |\n";
+				cout << "\t\t                    |             LOGIN ACCOUNT            |\n";
+				cout << "\t\t                     ======================================\n\n";
+				goto up;
+			}
+			if (choice == 's')
+			{
+				signupavender();
+			}
+			if (choice == 'e')
+			{
+				system("CLS");
+			}
+
+
+		}
+		acc.close();
+	}
+	void Avenderlist()
+	{
+		ifstream acc("signupavender.txt");
+		cout << "\nUser name" << "\t\t" << "Password\n";
+		string read;
+		while (!acc.eof())
+		{
+			getline(acc, read);
+			cout << read << endl;
+		}
+		acc.close();
+	}
+
+};
+class Invoice : public cart
+{
+public:
+
+	void purchaseitem()
+	{
+
+		cout << "product id" << "\t\t" << "product name" << "\t\t" << "product price" << "\t\t" << "product quantity" << "\t\t" << "Total price\n";
+		for (int i = 0; i < c->count; i++)
+		{
+			cout << c[i].id << "\t\t\t" << c[i].name << "\t\t\t" << c[i].price << "\t\t\t" << c[i].quantity << "\t\t\t\t" << c[i].totalPrice << endl;
+		}
+
+	}
+	void removeitem()
+	{
+		string a;
+
+		int b;
+		cout << "Eneter id:";
+		cin >> b;
+		cout << "Eneter name:";
+		cin >> a;
+		for (int i = 0; i < c->count; i++)
+		{
+			if (c[i].name == a && c[i].id == b)
+			{
+				for (int j = i; j < count - 1; j++)
+				{
+					c[j].id = c[j + 1].id;
+					c[j].name = c[j + 1].name;
+					c[j].price = c[j + 1].price;
+					c[j].quantity = c[j + 1].quantity;
+					c[j].totalPrice = c[j + 1].totalPrice;
+
+
+				}
+
+
+			}
+		}
+
+		c->count -= 1;
+
+
+		cout << "\n------------------------------------------ Purchase Item --------------------------------------------------\n\n";
+		purchaseitem();
+	}
+	void Decquantity()
+	{
+		int a;
+		cout << "Enter the NO : ";
+		cin >> a;
+		for (int i = 0; i < c->count; i++)
+		{
+			if (c[i].id == a)
+			{
+
+				cout << "Enter the quantity : ";
+				cin >> c[i].quantity;
+				c[i].totalPrice = c[i].price*c[i].quantity;
+				cout << "\nTotal : " << c[i].totalPrice << " RS\n";
+			}
+		}
+
+	}
+
+
+	void invoice()const
+	{
+
+		cout << "\n\n\n=================================================================================================================\n";
+		cout << "product id" << "\t\t" << "product name" << "\t\t" << "product price" << "\t\t" << "product quantity" << "\t\t" << "Total price\n";
+		cout << "==================================================================================================================\n";
+		for (int i = 0; i < c->count; i++)
+		{
+			cout << c[i].id << "\t\t\t" << c[i].name << "\t\t\t" << c[i].price << "\t\t\t" << c[i].quantity << "\t\t\t\t" << c[i].totalPrice << endl;
+		}
+
+		cout << "==================================================================================================================\n";
+		for (int i = 1; i < c->count; i++)
+		{
+			c[0] + c[i];
+		}
+		cout << "                                                                                              Total bill " << c->totalPrice;
+		int a;
+		cout << "\n\n\npress 1 for cash on Delivery :";
+		cout << "\npress 2 for   card ";
+		cin >> a;
+		if (a == 1)
+		{
+			system("CLS");
+			string name, Address; long long int PhoneNo;
+			cout << "Enter Name : ";
+			cin >> name;
+			cout << "Enter Your Address : ";
+			cin >> Address;
+			cout << "Enter Phone No : ";
+			cin >> PhoneNo;
+			cout << "\n\n\nYour name : " << name << "\nYour Address : " << Address << "\nYour Phone no : " << PhoneNo << endl;
+			cout << "\nTotal Bill : " << c->totalPrice << "\n You successful purchase these Product \n";
+			Sleep(1000);
+			endgraphics();
+
+			exit(0);
+		}
+		if (a == 2)
+		{
+			system("CLS");
+			string name, Address; long long int PhoneNo, cardNo;
+			cout << "Enter Name :";
+			cin >> name;
+			cout << "Enter Your Address :";
+			cin >> Address;
+			cout << "Enter Phone No :";
+			cin >> PhoneNo;
+			cout << "Enter'14 digit card No' :";
+			cin >> cardNo;
+			cout << "\n\n\nYour name : " << name << "\nYour Address :" << Address << "\nYour Phone no :" << PhoneNo << "CARD NO:" << cardNo << endl << endl;
+			cout << "\nTotal Bill " << c->totalPrice << "\n You successful purchase these Product \n";
+			Sleep(1000);
+			endgraphics();
+			exit(0);
+		}
+	}
+
+};
+class User
+{
+protected:
+	string  un, pass, firstname, lastname;
+	char choice;
+	product P;
+	Invoice C;
+public:
+	string password, email;
+	User() {}
+
+	User(Invoice c, product p)
+	{
+		P = p;
+		C = c;
+
+	}
+	virtual void signupuser()
+	{
+		cout << "\n\n\n\n\n\n\n\n\t\t                     ======================================\n";
+		cout << "\t\t                    |                  User                  |\n";
+		cout << "\t\t                    |             Sign up ACCOUNT            |\n";
+		cout << "\t\t                     ======================================\n\n";
+		ofstream acc("signupuser.txt", ios::app);
+	st:
+		cout << "\n\n\t\t                     ======================================\n";
+		cout << "\t\t                    | ENTER THE First Name:   ";
+		cin >> firstname;
+		cout << "\t\t                     ======================================\n";
+		cout << "\t\t                    | ENTER THE Last name :  ";
+		cin >> lastname;
+		cout << "\n\t\t                    =======================================\n";
+		cout << "\t\t                    | ENTER THE Email     :  ";
+		cin >> un;
+		cout << "\t\t                     ======================================\n";
+		ifstream ac("signupuser.txt");
+		while (!ac.eof())
+		{
+			ac >> email;
+			if (email == un)
+			{
+				loading<char>();
+				cout << "\n\n\n                     \t\t\t   Email Already Exit" << endl;
+				Sleep(2000);
+				system("CLS");
+				cout << "\n\n\n\n\n\n\n\n\t\t                     ======================================\n";
+				cout << "\t\t                    |                 Again                |\n";
+				cout << "\t\t                    |             Signup ACCOUNT            |\n";
+				cout << "\t\t                     ======================================\n\n";
+				goto st;
+			}
+		}
+		ac.close();
+		email = un;
+		acc << email;
+		acc << "\t\t";
+		cout << "\t\t                    | ENTER THE Password :  ";
+		cin >> password;
+		cout << "\t\t                     ======================================\n";
+		acc << password;
+		acc << endl;
+		loading<char>();
+		cout << "\n\n                        \t\t Successfully signup accout         " << endl;
+		Sleep(2000);
+		system("CLS");
+		int choice;
+		cout << "\n   Press 1 for login user  account :\n";
+		cout << "   Press 2 for mainmanu page\n";
+		cin >> choice;
+		if (choice == 1)
+		{
+			system("CLS");
+			loginuser();
+		}
+		if (choice == 2)
+		{
+			system("CLS");
+		}
+		acc.close();
+	}
+	virtual void loginuser()
+	{
+
+		bool a = false;
+		cout << "\n\n\n\n\n\n\n\n\t\t                     ======================================\n";
+		cout << "\t\t                    |                 User               |\n";
+		cout << "\t\t                    |             LOGIN ACCOUNT            |\n";
+		cout << "\t\t                     ======================================\n\n";
+	up:
+		cout << "\n\n\t\t                     ======================================\n";
+		cout << "\t\t                    | ENTER THE Email :   ";
+		cin >> un;
+		cout << "\t\t                     ======================================\n";
+		cout << "\t\t                    | ENTER THE PASSWORD  :  ";
+		cin >> pass;
+		cout << "\t\t                    =======================================\n";
+
+		ifstream acc("signupuser.txt");
+		while (!acc.eof())
+		{
+			acc >> email;
+			acc >> password;
+			if ((email == un) && (password == pass))
+			{
+				loading<char>();
+				cout << "\n\n\n                        \t\t   You Login Sucessfully         " << endl;
+				Sleep(2000);
+				system("CLS");
+				cout << "\n\n======================================\n";
+				cout << "                   WELCOME";
+				cout << "\n======================================\n";
+
+				a = true;
+
+				int choice;
+				do
+				{
+					cout << "\n                              Choose Category\n\n";
+					cout << "----------------------------------------------------------------------------\n";
+					cout << "                               Purchase Items                                     ";
+					cout << "\n----------------------------------------------------------------------------\n\n";
+					cout << "\t\tPress 1 for Drink and snackes\n";
+					cout << "\t\tPress 2 for Groccery \n";
+					cout << "\t\tPress 3 for Vegetable \n";
+					cout << "\t\tPress 4 for Bakery\n";
+					cout << "\t\tPress 5 for Fruits\n\n";
+					cout << "----------------------------------------------------------------------------\n";
+					cout << "                                Invoice                                            ";
+					cout << "\n----------------------------------------------------------------------------\n\n";
+					cout << "\t\tPress 6 for Show Purchase Items\n";
+					cout << "\t\tPress 7 for Remove Item\n";
+					cout << "\t\tPress 8 for Increase/Decrease quantity \n";
+
+					cout << "----------------------------------------------------------------------------\n";
+					cout << "                                Sign out                                            ";
+					cout << "\n----------------------------------------------------------------------------\n\n";
+					cout << "\t\tPress 9  gernate invoive and exit \n";
+					cin >> choice;
+					system("CLS");
+					switch (choice)
+					{
+					case 1:
+
+						int choice;
+						do
+						{
+							cout << "\n======================================\n";
+							cout << "\n            Drinks and snackes\n";
+							cout << "\n======================================\n";
+							cout << "\n\n            Available item            \n\n";
+							P.readdrink();
+							cout << "\n\n   Press 1 for purchase product\n";
+							cout << "   Press 2 for exit\n";
+							cin >> choice;
+							if (choice == 1)
+							{
+								P.purchasedrink();
+
+							}
+
+						} while (choice != 2);
+						system("CLS");
+						break;
+					case 2:
+						cout << "\n======================================\n";
+						cout << "\n               Groccery\n";
+						cout << "\n======================================\n";
+						cout << "\n\n            Available item            \n\n";
+						P.readGroccery();
+						int a;
+						do
+						{
+							cout << "\n\n   Press 1 for purchase product\n";
+							cout << "   Press 2 for exit\n";
+							cin >> a;
+							if (a == 1)
+							{
+								P.purchasegroccery();
+							}
+						} while (a != 2); system("CLS");
+						break;
+					case 3:
+						cout << "\n======================================\n";
+						cout << "\n               Vegetables\n";
+						cout << "\n======================================\n";
+						cout << "\n\n            Available item            \n\n";
+						P.readVegitable();
+						int b;
+						do
+						{
+							cout << "\n\n   Press 1 for purchase product\n";
+							cout << "   Press 2 for exit\n";
+							cin >> b;
+							if (b == 1)
+							{
+								P.purchasevegetable();
+							}
+
+						} while (b != 2); system("CLS");
+						break;
+					case 4:
+						cout << "\n======================================\n";
+						cout << "\n                Bakery\n";
+						cout << "\n======================================\n";
+						cout << "\n\n            Available item            \n\n";
+						P.readBakery();
+						int c;
+						do
+						{
+							cout << "\n\n   Press 1 for purchase product\n";
+							cout << "   Press 2 for exit\n";
+							cin >> c;
+							if (c == 1)
+							{
+								P.purchasebakery();
+							}
+						} while (c != 2); system("CLS");
+						break;
+					case 5:
+						cout << "\n======================================\n";
+						cout << "\n                 Fruit\n";
+						cout << "\n======================================\n";
+						cout << "\n\n            Available item            \n\n";
+						P.readFruit();
+						int d;
+						do
+						{
+							cout << "\n\n   Press 1 for purchase product\n";
+							cout << "   Press 2 for exit\n";
+							cin >> d;
+							if (d == 1)
+							{
+								P.purchasefruit();
+							}
+						} while (d != 2); system("CLS");
+						break;
+					case 6:
+						cout << "\n------------------------------------------ Purchase Item --------------------------------------------------\n\n";
+						C.purchaseitem();
+						break;
+
+					case 7:
+						cout << "\n------------------------------------------ Purchase Item --------------------------------------------------\n\n";
+						C.purchaseitem();
+						C.removeitem();
+						break;
+					case 8:
+						cout << "\n------------------------------------------ Purchase Item --------------------------------------------------\n\n";
+						C.purchaseitem();
+						C.Decquantity();
+						break;
+					}
+
+
+				} while (choice != 9);
+				C.invoice();
+
+			}
+		}
+		if (a == false)
+		{
+			cout << "\n\nWrong email  and u Password \n";
+			cout << "\n\n       Please  Wait ......";
+			Sleep(3000);
+			system("CLS");
+			cout << "\npress ' a ' for again login account :\n";
+			cout << "\nPress  ' s ' for signup acoount\n";
+			cout << "\nPress  ' e ' for exit \n";
+			cin >> choice;
+			if (choice == 'a')
+			{
+				system("CLS");
+				cout << "\n          Again\n";
+				cout << "\n       Login Account\n\n";
+				goto up;
+			}
+			if (choice == 's')
+			{
+				signupuser();
+			}
+			if (choice == 'e')
+			{
+				system("CLS");
+			}
+
+		}
+		acc.close();
+	}
+	void userlist()
+	{
+		ifstream acc("signupuser.txt");
+		cout << "\nEmail" << "\t\t\t\t" << "Password\n";
+		string line;
+		while (!acc.eof())
+		{
+			getline(acc, line);
+
+			cout << line << endl;
+
+		}
+		acc.close();
+	}
+};
+void delete_Avender()
+{
+	bool b = false;
+	Avender A;
+	char choice;
+	cout << "Press ' y' for delete Avender  :\n";
+	cout << "Press 'e' for exit:\n";
+	cin >> choice;
+	if (choice == 'y')
+	{
+		string name;
+		cout << "enter User Name :";
+		cin >> name;
+		ofstream tempfile("temp.txt");
+		ifstream read("signupavender.txt");
+		while (read >> A.username >> A.password)
+		{
+			if (A.username == name)
+			{
+				b = true;
+			}
+			if (A.username != name)
+			{
+				tempfile << A.username << "\t\t" << A.password << endl;
+
+			}
+		}
+		read.close();
+		tempfile.close();
+		remove("signupavender.txt");
+		rename("temp.txt", "signupavender.txt");
+		if (b == true)
+		{
+			cout << "\nAvender deleted :\n";
+			Sleep(2000);
+		}
+		else
+		{
+			cout << "\nUsername not fount \n";
+			Sleep(2000);
+		}
+	}
+	if (choice == 'e')
+	{
+		system("CLS");
+	}
+
+}
+void delete_User()
+{
+	bool b = false;
+	User u;
+	char choice;
+	cout << "Press ' y' for delete item :\n";
+	cout << "Press 'e' for exit:\n";
+	cin >> choice;
+	if (choice == 'y')
+	{
+		string Email;
+		cout << "enter Email :";
+		cin >> Email;
+		ofstream tempfile("temp.txt");
+		ifstream read("signupuser.txt");
+		while (read >> u.email >> u.password)
+		{
+			if (u.email == Email)
+			{
+				b = true;
+			}
+			if (u.email != Email)
+			{
+				tempfile << u.email << "\t\t" << u.password << endl;
+
+			}
+		}
+		read.close();
+		tempfile.close();
+		remove("signupuser.txt");
+		rename("temp.txt", "signupuser.txt");
+		if (b == true)
+		{
+			cout << "\nUser deleted :\n";
+			Sleep(2000);
+		}
+		else
+		{
+			cout << "\nEmail not fount \n";
+			Sleep(2000);
+		}
+	}
+	if (choice == 'e')
+	{
+		system("CLS");
+	}
+
+}
+class Admin
+{
+	string un, pass;
+	char choice;
+	product P;
+	User *U;
+	Avender *v;
+public:
+	Admin(Avender *V, User *u, product p)
+	{
+		P = p;
+		U = u;
+		v = V;
+	}
+	void loginadmin()
+	{
+	start:
+		cout << "\n\n\n\n\n\n\n\n\t\t                     ======================================\n";
+		cout << "\t\t                    |                 ADMIN                |\n";
+		cout << "\t\t                    |             LOGIN ACCOUNT            |\n";
+		cout << "\t\t                     ======================================\n\n";
+		cout << "\n\n\t\t                     ======================================\n";
+		cout << "\t\t                    | ENTER THE USER NAME :   ";
+		cin >> un;
+		cout << "\t\t                     ======================================\n";
+		cout << "\t\t                    | ENTER THE PASSWORD  :  ";
+		cin >> pass;
+		cout << "\n\t\t                    =======================================\n\n";
+		ofstream acc("login.txt");
+		string username = "admin";
+		string password = "admin";
+		acc.close();
+		ifstream account("login.txt");
+		if ((username == un) && (password == pass))
+		{
+			loading<char>();
+			cout << "\n\n\n                        \t\t   You Login Sucessfully         " << endl;
+			Sleep(2000);
+			system("CLS");
+			cout << "\n\n======================================\n";
+			cout << "                   WELCOME";
+			cout << "\n======================================\n";
+			int choice;
+			do
+			{
+
+				cout << "\n\n\n   Press 1 for Avenderlist  :\n";
+				cout << "   Press 2 for Userlist     :\n";
+				cout << "   press 3 for show items   : \n";
+				cout << "   press 4 for delete item  :\n";
+				cout << "   press 5 for sign out     :\n";
+				cin >> choice;
+				system("CLS");
+				if (choice == 1)
+				{
+					int a;
+					cout << "\n\n\n\n\t\t\t\t\t======================================\n";
+					cout << "\t\t\t\t\t| Press 1 for show Avender list  :    |\n";
+					cout << "\t\t\t\t\t ======================================\n";
+					cout << "\t\t\t\t\t| Press 2 for Delete Avender     :    |\n";
+					cout << "\t\t\t\t\t ======================================\n";
+					cout << "\t\t\t\t\t| Press 3 for exit               :   |\n";
+					cout << "\t\t\t\t\t ======================================\n";
+					cin >> a;
+					if (a == 1)
+					{
+						system("CLS");
+						cout << "\n\n======================================\n";
+						cout << "                Avender List";
+						cout << "\n======================================\n";
+						v->Avenderlist();
+						cout << endl << endl << setw(120) << setfill('-') << "-" << endl;
+					}
+					if (a == 2)
+					{
+						system("CLS");
+						cout << "\n\n======================================\n";
+						cout << "                Avender list";
+						cout << "\n======================================\n";
+						v->Avenderlist();
+						delete_Avender();
+					}
+					if (a == 3)
+					{
+						system("CLS");
+					}
+
+				}
+
+
+
+				if (choice == 2)
+				{
+					int a;
+					cout << "\n\n\n\n\t\t\t\t\t======================================\n";
+					cout << "\t\t\t\t\t| Press 1 for Show User list     :    |\n";
+					cout << "\t\t\t\t\t ======================================\n";
+					cout << "\t\t\t\t\t| Press 2 for Delete User        :    |\n";
+					cout << "\t\t\t\t\t ======================================\n";
+					cout << "\t\t\t\t\t| Press 3 for exit               :   |\n";
+					cout << "\t\t\t\t\t ======================================\n";
+					cin >> a;
+					if (a == 1)
+					{
+						system("CLS");
+						cout << "\n\n======================================\n";
+						cout << "                 User List";
+						cout << "\n======================================\n";
+						U->userlist();
+						cout << endl << endl << setw(120) << setfill('-') << "-" << endl;
+					}
+					if (a == 2)
+					{
+						system("CLS");
+						cout << "\n\n======================================\n";
+						cout << "                 User list";
+						cout << "\n======================================\n";
+						U->userlist();
+						delete_User();
+					}
+					if (a == 3)
+					{
+						system("CLS");
+					}
+
+				}
+				if (choice == 3)
+				{
+					system("CLS");
+					int choice;
+					do
+					{
+						cout << "\n======================================\n";
+						cout << "\n        Choose Category\n";
+						cout << "\n======================================\n";
+						cout << "   Press 1 for Drink and snacks  :\n";
+						cout << "   Press 2 for groccery          :\n";
+						cout << "   Press 3 for vegetable         :\n";
+						cout << "   Press 4 for bakery            :\n";
+						cout << "   Press 5 for fruits            :\n";
+						cout << "   press 6 for exit              :\n";
+						cout << "\n======================================\n";
+						cin >> choice;
+
+						if (choice == 1)
+						{
+
+							system("CLS");
+							cout << "\n\n======================================\n";
+							cout << "              Drink And Snacks";
+							cout << "\n======================================\n";
+							P.readdrink();
+						}
+						if (choice == 2)
+						{
+							system("CLS");
+							cout << "\n\n======================================\n";
+							cout << "                 Groccery";
+							cout << "\n======================================\n";
+							P.readGroccery();
+						}
+						if (choice == 3)
+						{
+							system("CLS");
+							cout << "\n\n======================================\n";
+							cout << "                  Vegetable";
+							cout << "\n======================================\n";
+							P.readVegitable();
+						}
+						if (choice == 4)
+						{
+							system("CLS");
+							cout << "\n\n======================================\n";
+							cout << "                  Bakery";
+							cout << "\n======================================\n";
+							P.readBakery();
+						}
+						if (choice == 5)
+						{
+							system("CLS");
+							cout << "\n\n======================================\n";
+							cout << "                   Fruit";
+							cout << "\n======================================\n";
+							P.readFruit();
+						}
+
+
+					} while (choice != 6);
+					system("CLS");
+				}
+				if (choice == 4)
+				{
+					system("CLS");
+					int choice;
+					do
+					{
+						system("CLS");
+						cout << "\n======================================\n";
+						cout << "\n        Choose Category\n";
+						cout << "\n======================================\n";
+						cout << "   Press 1 for Drink and snacks  :\n";
+						cout << "   Press 2 for groccery          :\n";
+						cout << "   Press 3 for vegetable         :\n";
+						cout << "   Press 4 for bakery            :\n";
+						cout << "   Press 5 for fruits            :\n";
+						cout << "   press 6 for exit              :\n";
+						cout << "\n======================================\n";
+						cin >> choice;
+
+						if (choice == 1)
+						{
+
+							system("CLS");
+							cout << "\n======================================\n";
+							cout << "\n        Drink And snacks\n";
+							cout << "\n======================================\n\n";
+							P.readdrink();
+							delete_Drink();
+						}
+						if (choice == 2)
+						{
+							system("CLS");
+							cout << "\n======================================\n";
+							cout << "\n           Groccery\n";
+							cout << "\n======================================\n\n";
+							P.readGroccery();
+							delete_groccery();
+						}
+						if (choice == 3)
+						{
+							system("CLS");
+							cout << "\n======================================\n";
+							cout << "\n          Vegetables\n";
+							cout << "\n======================================\n\n";
+							P.readVegitable();
+							delete_vegetables();
+						}
+						if (choice == 4)
+						{
+							system("CLS");
+							cout << "\n======================================\n";
+							cout << "\n           Bakery\n";
+							cout << "\n======================================\n";
+							P.readBakery();
+							delete_Bakery();
+						}
+						if (choice == 5)
+						{
+							system("CLS");
+							cout << "\n======================================\n";
+							cout << "\n              Fruit\n";
+							cout << "\n======================================\n";
+							P.readFruit();
+							delete_Fruit();
+						}
+
+
+					} while (choice != 6);
+				}
+			} while (choice != 5);
+		}
+		else
+		{
+
+			loading<char>();
+			cout << "\n\n\n                     \t\t\t  Wrong Username & Password        " << endl;
+			Sleep(2000);
+			system("CLS");
+			cout << "\n\n\n   Press ' a ' for again login account :\n";
+			cout << "\n   Press ' e ' for exit                : \n";
+			cin >> choice;
+			if (choice == 'a')
+			{
+				system("CLS");
+				cout << "\n       Again Login Account\n";
+				goto start;
+			}
+			if (choice == 'e')
+			{
+				system("CLS");
+			}
+
+		}
+		account.close();
+	}
+};
+void main()
+{
+	startgraphics();
+	system("color 60");
+	product P;
+	Invoice c;
+	User u(c, P);
+	Avender V(P);
+	Admin A(&V, &u, P);
+	int choice;
+	do
+	{
+		cout << "\n\n";
+		cout << setw(15) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(6) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(5) << setfill(' ') << " " << setw(6) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(7) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(10) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(6) << setfill('*') << "*" << endl;
+		cout << setw(15) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(4) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(1) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(4) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(1) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(6) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(1) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << endl;
+		cout << setw(15) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(3) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(3) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(3) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(2) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(4) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(2) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << endl;
+		cout << setw(15) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(2) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(2) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(6) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(3) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(2) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(3) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(6) << setfill('*') << "*" << endl;
+		cout << setw(15) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(1) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(7) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(1) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(4) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << endl;
+		cout << setw(15) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(11) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(6) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(6) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(6) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(7) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(10) << setfill(' ') << " " << setw(1) << setfill('*') << "*" << setw(5) << setfill(' ') << " " << setw(6) << setfill('*') << "*" << endl;
+		cout << "\n\n" << setw(121) << setfill('-') << "-\n\n\n\n\n\n\n\n";
+
+		cout << setw(50) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+		cout << setw(50) << setfill(' ') << " " << setw(1) << setfill('|') << "|" << "  Press 1 for Admin    " << setw(1) << setfill('|') << "|" << endl;
+		cout << setw(50) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+		cout << setw(50) << setfill(' ') << " " << setfill('|') << "|" << "  Press 2 for Avender  " << setw(1) << setfill('|') << "|" << endl;
+		cout << setw(50) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+		cout << setw(50) << setfill(' ') << " " << setfill('|') << "|" << "  Press 3 for User     " << setw(1) << setfill('|') << "|" << endl;
+		cout << setw(50) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+		cin >> choice;
+		if (choice == 1)
+		{
+			system("CLS");
+			int a;
+			cout << endl << endl << endl;
+			cout/*a*/ << setw(20 + 7) << setfill(' ') << ' ' << "**"/*d*/ << setw(8) << setfill(' ') << ' ' << "* * *"/*m*/ << setw(9) << setfill(' ') << ' ' << "**" << setw(5) << setfill(' ') << ' ' << "**" /*i*/ << setw(5) << setfill(' ') << ' ' << "* * * * *"/*n*/ << setw(5) << setfill(' ') << ' ' << "**" << setw(6) << setfill(' ') << ' ' << "*" << endl
+				/*a*/ << setw(18 + 7) << setfill(' ') << ' ' << "*" << setw(4) << setfill(' ') << ' ' << "*"/*d*/ << setw(6) << setfill(' ') << ' ' << "*" << setw(5) << setfill(' ') << ' ' << "*"/*m*/ << setw(7) << setfill(' ') << ' ' << "*" << setw(1) << setfill(' ') << ' ' << "*" << setw(3) << setfill(' ') << ' ' << "*" << setw(1) << setfill(' ') << ' ' << "*" /*i*/ << setw(9) << setfill(' ') << ' ' << "*"/*n*/ << setw(9) << setfill(' ') << ' ' << "*" << setw(1) << setfill(' ') << ' ' << "*" << setw(5) << setfill(' ') << ' ' << "*" << endl
+				/*a*/ << setw(17 + 7) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "*"/*d*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "*"/*m*/ << setw(6) << setfill(' ') << ' ' << "*" << setw(2) << setfill(' ') << ' ' << "*" << setw(1) << setfill(' ') << ' ' << "*" << setw(2) << setfill(' ') << ' ' << "*"/*i*/ << setw(9) << setfill(' ') << ' ' << "*"/*n*/ << setw(9) << setfill(' ') << ' ' << "*" << setw(2) << setfill(' ') << ' ' << "*" << setw(4) << setfill(' ') << ' ' << "*" << endl
+				/*a*/ << setw(17 + 7) << setfill(' ') << ' ' << "*" << setw(6) << setfill('*') << '*' << "*"/*d*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*" /*m*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(3) << setfill(' ') << ' ' << "*" << setw(3) << setfill(' ') << ' ' << "*"/*i*/ << setw(9) << setfill(' ') << ' ' << "*" << setw(9) << setfill(' ') << ' ' << "*" << setw(3) << setfill(' ') << ' ' << "*" << setw(3) << setfill(' ') << ' ' << "*" << endl
+				/*a*/ << setw(17 + 7) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "*"/*d*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "*" /*m*/ << setw(6) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*" /*i*/ << setw(9) << setfill(' ') << ' ' << "*"/*n*/ << setw(9) << setfill(' ') << ' ' << "*" << setw(4) << setfill(' ') << ' ' << "*" << setw(2) << setfill(' ') << ' ' << "*" << endl
+				/*a*/ << setw(17 + 7) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "*"/*d*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(5) << setfill(' ') << ' ' << "*" /*m*/ << setw(7) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*" /*i*/ << setw(9) << setfill(' ') << ' ' << "*"/*n*/ << setw(9) << setfill(' ') << ' ' << "*" << setw(5) << setfill(' ') << ' ' << "*" << setw(1) << setfill(' ') << ' ' << "*" << endl
+				/*a*/ << setw(17 + 7) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "*"/*d*/ << setw(5) << setfill(' ') << ' ' << "* * *"/*m*/ << setw(9) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*"/*i*/ << setw(5) << setfill(' ') << ' ' << "* * * * *"/*n*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "**" << endl;
+			cout << setw(121) << setfill('-') << "-" << endl;
+			cout << "\n\n\n\n" << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(1) << setfill('|') << "|" << "       Admin          " << setw(1) << setfill('|') << "|" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(1) << setfill('|') << "|" << "  Press 1 for login   " << setw(1) << setfill('|') << "|" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(1) << setfill('|') << "|" << "  Press 2 for Mainmanu" << setw(1) << setfill('|') << "|" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+			cin >> a;
+			if (a == 1)
+			{
+				system("CLS");
+				A.loginadmin();
+			}
+			if (a == 2)
+			{
+				system("CLS");
+			}
+
+		}
+		if (choice == 2)
+		{
+			system("CLS");
+			int a;
+			cout /*v*/ << setw(5 + 10) << setfill(' ') << ' ' << "*" << setw(12) << setfill(' ') << ' ' << "*" /*e*/ << setw(5) << setfill(' ') << ' ' << "* * * * *"/*n*/ << setw(5) << setfill(' ') << ' ' << "**" << setw(6) << setfill(' ') << ' ' << "*" /*d*/ << setw(5) << setfill(' ') << ' ' << "* * *" /*o*/ << setw(12) << setfill(' ') << ' ' << "* *"/*r*/ << setw(8) << setfill(' ') << ' ' << "* * * *" << endl
+				/*v*/ << setw(6 + 10) << setfill(' ') << ' ' << "*" << setw(10) << setfill(' ') << ' ' << "*" /*e*/ << setw(6) << setfill(' ') << ' ' << "*" /*n*/ << setw(13) << setfill(' ') << ' ' << "*" << setw(1) << setfill(' ') << ' ' << "*" << setw(5) << setfill(' ') << ' ' << "*" /*d*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(5) << setfill(' ') << ' ' << "*" /*o*/ << setw(8) << setfill(' ') << ' ' << "*" << setw(5) << setfill(' ') << ' ' << "*" /*r*/ << setw(6) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "*" << endl
+				/*v*/ << setw(7 + 10) << setfill(' ') << ' ' << "*" << setw(8) << setfill(' ') << ' ' << "*" << /*e*/setw(7) << setfill(' ') << ' ' << "*"/*n*/ << setw(13) << setfill(' ') << ' ' << "*" << setw(2) << setfill(' ') << ' ' << "*" << setw(4) << setfill(' ') << ' ' << "*" /*d*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "*"/*o*/ << setw(6) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*" /*r*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*" << endl
+				/*v*/ << setw(8 + 10) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "*"  /*e*/ << setw(8) << setfill(' ') << ' ' << "* * * * *"/*n*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(3) << setfill(' ') << ' ' << "*" << setw(3) << setfill(' ') << ' ' << "*" /*d*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*"/*o*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*"/*r*/ << setw(5) << setfill(' ') << ' ' << "* * * *" << endl
+				/*v*/ << setw(9 + 10) << setfill(' ') << ' ' << "*" << setw(4) << setfill(' ') << ' ' << "*"  /*e*/ << setw(9) << setfill(' ') << ' ' << "*"/*n*/ << setw(13) << setfill(' ') << ' ' << "*" << setw(4) << setfill(' ') << ' ' << "*" << setw(2) << setfill(' ') << ' ' << "*"/*d*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "*"/*o*/ << setw(6) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*" /*r*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "*" << endl
+				/*v*/ << setw(10 + 10) << setfill(' ') << ' ' << "*" << setw(2) << setfill(' ') << ' ' << "*"  /*e*/ << setw(10) << setfill(' ') << ' ' << "*"/*n*/ << setw(13) << setfill(' ') << ' ' << "*" << setw(5) << setfill(' ') << ' ' << "*" << setw(1) << setfill(' ') << ' ' << "*"/*d*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(5) << setfill(' ') << ' ' << "*"/*o*/ << setw(8) << setfill(' ') << ' ' << "*" << setw(5) << setfill(' ') << ' ' << "*"/*r*/ << setw(6) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*" << endl
+				/*v*/ << setw(11 + 10) << setfill(' ') << ' ' << "**" /*e*/ << setw(11) << setfill(' ') << ' ' << "* * * * *" /*n*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "**" /*d*/ << setw(5) << setfill(' ') << ' ' << "* * *"/*o*/ << setw(12) << setfill(' ') << ' ' << "* *"/*r*/ << setw(8) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*" << endl;
+			cout << setw(121) << setfill('-') << "-" << endl;
+			cout << "\n\n\n\n\n\n\n" << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(1) << setfill('|') << "|" << "       Avender        " << setw(1) << setfill('|') << "|" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(1) << setfill('|') << "|" << "  Press 1 for login   " << setw(1) << setfill('|') << "|" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(1) << setfill('|') << "|" << "  Press 2 for sign in " << setw(1) << setfill('|') << "|" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(1) << setfill('|') << "|" << "  Press 3 for Mainmanu" << setw(1) << setfill('|') << "|" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+			cin >> a;
+			if (a == 1)
+			{
+				system("CLS");
+				V.loginavender();
+			}
+			if (a == 2)
+			{
+				system("CLS");
+				V.signupavender();
+			}if (a == 3)
+			{
+				system("CLS");
+			}
+		}
+		if (choice == 3)
+		{
+			system("CLS");
+			int a;
+			cout << endl << endl;
+			cout <</*u*/setw(2 + 20) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*"/*s*/ << setw(8) << setfill(' ') << ' ' << "* * * *"/*e*/ << setw(7) << setfill(' ') << ' ' << "* * * * *" /*r*/ << setw(5) << setfill(' ') << ' ' << "* * * *" << endl
+				<</*u*/setw(2 + 20) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*" /*s*/ << setw(7) << setfill(' ') << ' ' << "*"/*e*/ << setw(14) << setfill(' ') << ' ' << "*" /*r*/ << setw(13) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "*" << endl
+				<</*u*/setw(2 + 20) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*"/*s*/ << setw(6) << setfill(' ') << ' ' << "*"/*e*/ << setw(15) << setfill(' ') << ' ' << "*"/*r*/ << setw(13) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*" << endl
+				<</*u*/setw(2 + 20) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*"/*s*/ << setw(7) << setfill(' ') << ' ' << "* * * * *"/*e*/ << setw(6) << setfill(' ') << ' ' << "* * * * *" /*r*/ << setw(5) << setfill(' ') << ' ' << "* * * *" << endl
+				<</*u*/setw(2 + 20) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*"/*s*/ << setw(15) << setfill(' ') << ' ' << "*"/*e*/ << setw(6) << setfill(' ') << ' ' << "*" /*r*/ << setw(13) << setfill(' ') << ' ' << "*" << setw(6) << setfill(' ') << ' ' << "*" << endl
+				<</*u*/setw(2 + 20) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*" /*s*/ << setw(14) << setfill(' ') << ' ' << "*"/*e*/ << setw(7) << setfill(' ') << ' ' << "*" /*r*/ << setw(13) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*" << endl
+				<</*u*/setw(3 + 20) << setfill(' ') << ' ' << "* * * *" /*s*/ << setw(8) << setfill(' ') << ' ' << "* * * *"/*e*/ << setw(8) << setfill(' ') << ' ' << "* * * * *"/*r*/ << setw(5) << setfill(' ') << ' ' << "*" << setw(7) << setfill(' ') << ' ' << "*" << endl;
+
+			cout << setw(121) << setfill('-') << "-" << endl;
+			cout << "\n\n\n\n" << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(1) << setfill('|') << "|" << "       USER           " << setw(1) << setfill('|') << "|" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(1) << setfill('|') << "|" << "  Press 1 for login   " << setw(1) << setfill('|') << "|" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(1) << setfill('|') << "|" << "  Press 2 for sign in " << setw(1) << setfill('|') << "|" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(1) << setfill('|') << "|" << "  Press 3 for Mainmanu" << setw(1) << setfill('|') << "|" << endl;
+			cout << setw(40) << setfill(' ') << " " << setw(25) << setfill('-') << "-" << endl;
+
+			cin >> a;
+			if (a == 1)
+			{
+				system("CLS");
+				u.loginuser();
+			}
+			if (a == 2)
+			{
+				system("CLS");
+				u.signupuser();
+			}
+			if (a == 3)
+			{
+				system("CLS");
+			}
+		}
+		else
+		{
+			system("CLS");
+		}
+	} while (choice != 4);
+
+
+}
