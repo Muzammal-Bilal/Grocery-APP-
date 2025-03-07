@@ -21,18 +21,14 @@ inventory, purchases, and stock updates efficiently.
 
     -   Monitor sales and stock
 
-```{=html}
-<!-- -->
-```
+
 -   **Vendor Panel:**
 
     -   Update and manage product stock
 
     -   Track inventory
 
-```{=html}
-<!-- -->
-```
+
 -   **User Panel:**
 
     -   Browse available groceries
@@ -41,9 +37,7 @@ inventory, purchases, and stock updates efficiently.
 
     -   View order history
 
-```{=html}
-<!-- -->
-```
+
 -   **File Handling:** Persistent data storage for users, inventory, and
     transactions.
 
